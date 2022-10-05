@@ -5,7 +5,7 @@
 
 html,
 body {
-  background-color: #9cbde6;
+  background-color: #91a35c;
   color: white;
 }
 
@@ -21,7 +21,6 @@ body {
   height: 16em;
   font-size: 0.75;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  margin: 2em;
   background-color: #A8A77A;
   transition: all .2s ease-in-out;
 }
@@ -31,30 +30,22 @@ body {
   transform: scale(1.1);
 }
 
-.normal {
-  background-color: #A8A77A;
+.type-names {
+  margin-right: 4px;
 }
 
-.water {
-  background-color: #EE8130;
+.image-about {
+  max-width: 100%;
+  height: auto;
+  padding: 1em;
+  background-color: #ceeef0;
+  border-radius: 1.5em;
 }
 
-.grass {
-  background-color: #7AC74C;
-}
-
-.fire {
-  background-color: #EE8130;
-}
-
-.bug {
-  background-color: #A6B91A;
-}
-
-.poison {
-  background-color: #A33EA1;
-}
-
-.electric {
-  background-color: #F7D02C;
+.search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
 }

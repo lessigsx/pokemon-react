@@ -1,35 +1,34 @@
 import React, { useEffect, useState } from "react";
-import Pokemon from "./componentes/Pokemon";
+import PokeMenu from "./componentes/PokeMenu";
 import "./App.css";
 
 function App() {
-  const [pokemon, setPokemon] = useState([]);
-  const [complete, setComplete] = useState(false);
+  const [allPokemon, setAllPokemon] = useState([]);
+  const [complete, setComplete] = useState(true);
 
   useEffect(() => {
-    const pokemonList = [];
-    fetch("https://pokeapi.co/api/v2/pokemon/?limit=25")
-      .then((response) => response.json())
-      .then((data) =>
-        data.results.map((item) =>
-          fetch(item.url)
-            .then((response) => response.json())
-            .then((poke) => pokemonList.push(poke))
-            .then(setPokemon(pokemonList))
-        )
+    const getData = async () => {
+      if (complete) {
+      const results = await fetch(
+        "https://pokeapi.co/api/v2/pokemon/?limit=25"
       );
-  }, []);
+      const data = await results.json();
+      const newData = await data.results;
+      setAllPokemon(newData);
+      setComplete(false);
+      }
+    };
 
-  // La unica forma que se me ocurre esperar a que termine la API de cargar los pokemones
-  setTimeout(() => {
-    setComplete(true);
-  }, 1000);
+    // Para que no se ejecute de nuevo al actualizar un archivo en desarrollo
+    if (complete) {
+      getData();
+    }
+
+  }, [complete]);
 
   return (
     <div className="App">
-      <div className="contenedor">
-        {complete ? Pokemon(pokemon) : <p>...</p>}
-      </div>
+      {!complete ? <PokeMenu pokemonesUrl={allPokemon} /> : "Cargando..."}
     </div>
   );
 }
