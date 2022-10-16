@@ -8,7 +8,6 @@ import {
   Grid,
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
 
 function PokeCard({ data }) {
   const colores = {
@@ -31,16 +30,46 @@ function PokeCard({ data }) {
     steel: "#B7B7CE",
     fairy: "#D685AD",
   };
+  const tipos = {
+    normal: "Normal",
+    fire: "Fuego",
+    water: "Agua",
+    electric: "Eléctrico",
+    grass: "Planta",
+    ice: "Hielo",
+    fighting: "Luchador",
+    poison: "Veneno",
+    ground: "Tierra",
+    flying: "Volador",
+    psychic: "Psíquico",
+    bug: "Bicho",
+    rock: "Roca",
+    ghost: "Fantasma",
+    dragon: "Dragón",
+    dark: "Oscuro",
+    steel: "Acero",
+    fairy: "Hada",
+  };
 
   const pokemonName =
     data["name"].charAt(0).toUpperCase() + data["name"].slice(1);
 
   return (
-    <Card className="pokemon">
-      <CardActionArea component={Link} to={`/${data["id"]}`}>
+    <Card
+      sx={{
+        boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+        backgroundColor: "#a8a77a",
+        transition: "all .2s ease-in-out",
+        "&:hover": {
+          boxShadow: "0 8px 16px 0 rgba(0, 0, 0, 0.2)",
+          transform: "scale(1.04)",
+        },
+      }}
+    >
+      <CardActionArea>
         <CardMedia
           component="img"
-          image={data["sprites"]["front_default"]}
+          image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data["id"]}.png`}
           alt={`Sprite de ${pokemonName}`}
           sx={{
             backgroundColor: "#e7f2c4",
@@ -51,23 +80,26 @@ function PokeCard({ data }) {
             backgroundColor: "#e4e8b3",
           }}
         >
-          <Typography
-            gutterBottom
-            variant="h6"
-            component="div"
-            sx={{
-              letterSpacing: "0.3px",
-              textAlign: "center",
-            }}
-          >
-            {pokemonName}
-          </Typography>
           <Grid container direction="row" justifyContent="space-evenly">
+            <Grid item container alignItems="center" justifyContent="center">
+              <Typography
+                gutterBottom
+                variant="h6"
+                component="div"
+                sx={{
+                  fontSize: pokemonName.includes("-mega") ? "14px" : "16px",
+                  letterSpacing: "0.3px",
+                  textAlign: "center",
+                }}
+              >
+                {pokemonName}
+              </Typography>
+            </Grid>
             {data["types"].map((type) => {
               let color = colores[type["type"]["name"]];
               let typeName =
-                type["type"]["name"].charAt(0).toUpperCase() +
-                type["type"]["name"].slice(1);
+                tipos[type["type"]["name"]].charAt(0).toUpperCase() +
+                tipos[type["type"]["name"]].slice(1);
               return (
                 <Grid item key={`${pokemonName}-${type["type"]["name"]}`}>
                   <Chip
@@ -75,12 +107,11 @@ function PokeCard({ data }) {
                     size="small"
                     variant="outlined"
                     sx={{
+                      fontSize: "0.90em",
                       border: `2px solid ${color}`,
                       borderRadius: "4px",
-                      margin: "0",
-                      padding: "0",
                       backgroundColor: color,
-                      color: "white",
+                      color: "#fffafa",
                     }}
                   />
                 </Grid>
